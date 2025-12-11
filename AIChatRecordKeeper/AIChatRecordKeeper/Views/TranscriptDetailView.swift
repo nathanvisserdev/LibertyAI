@@ -294,17 +294,7 @@ struct StorageLocationRow: View {
             }
             .buttonStyle(.plain)
             #else
-            Button {
-                // iOS: Show share sheet for the file
-                if let url = URL(string: "file://" + path) {
-                    let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let window = windowScene.windows.first,
-                       let rootVC = window.rootViewController {
-                        rootVC.present(activityVC, animated: true)
-                    }
-                }
-            } label: {
+            ShareLink(item: URL(filePath: path)) {
                 Image(systemName: "square.and.arrow.up")
             }
             .buttonStyle(.plain)
