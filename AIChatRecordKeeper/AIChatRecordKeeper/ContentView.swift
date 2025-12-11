@@ -151,19 +151,4 @@ struct FeatureRow: View {
 #Preview {
     ContentView()
         .modelContainer(for: [ChatTranscript.self, HashPublication.self, ChainOfCustodyEntry.self, StorageLocation.self], inMemory: true)
-        }
-
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
-
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

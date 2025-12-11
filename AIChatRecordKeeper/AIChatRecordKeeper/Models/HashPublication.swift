@@ -12,7 +12,7 @@ import SwiftData
 final class HashPublication {
     var id: UUID
     var transcriptID: UUID
-    var service: PublicationService
+    var service: PublicationServiceType
     var publishedAt: Date
     var publicURL: String?
     var transactionID: String? // For blockchain services
@@ -21,7 +21,7 @@ final class HashPublication {
     
     init(
         transcriptID: UUID,
-        service: PublicationService,
+        service: PublicationServiceType,
         publicURL: String? = nil,
         transactionID: String? = nil
     ) {
@@ -35,7 +35,7 @@ final class HashPublication {
     }
 }
 
-enum PublicationService: String, Codable {
+enum PublicationServiceType: String, Codable {
     case githubGist = "GitHub Gist"
     case email = "Email"
     case openTimestamps = "OpenTimestamps"

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
 
 struct ChainOfCustodyView: View {
     let transcript: ChatTranscript
@@ -50,7 +51,9 @@ struct ChainOfCustodyView: View {
                 }
             }
             .navigationTitle("Chain of Custody")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") {
@@ -255,7 +258,9 @@ struct ReportView: View {
                     .padding()
             }
             .navigationTitle("Chain of Custody Report")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") {

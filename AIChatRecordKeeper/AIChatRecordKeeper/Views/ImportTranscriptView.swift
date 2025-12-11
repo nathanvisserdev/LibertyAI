@@ -62,7 +62,9 @@ struct ImportTranscriptView: View {
                 }
             }
             .navigationTitle("Import Transcript")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {

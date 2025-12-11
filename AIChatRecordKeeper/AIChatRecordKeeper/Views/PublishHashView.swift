@@ -12,7 +12,7 @@ struct PublishHashView: View {
     let transcript: ChatTranscript
     @Binding var isPresented: Bool
     
-    @State private var selectedService: PublicationService = .githubGist
+    @State private var selectedService: PublicationServiceType = .githubGist
     @State private var githubToken = ""
     @State private var webhookURL = ""
     @State private var isPublishing = false
@@ -37,9 +37,9 @@ struct PublishHashView: View {
                 
                 Section("Publication Service") {
                     Picker("Service", selection: $selectedService) {
-                        Text("GitHub Gist").tag(PublicationService.githubGist)
-                        Text("OpenTimestamps").tag(PublicationService.openTimestamps)
-                        Text("Custom Webhook").tag(PublicationService.customWebhook)
+                        Text("GitHub Gist").tag(PublicationServiceType.githubGist)
+                        Text("OpenTimestamps").tag(PublicationServiceType.openTimestamps)
+                        Text("Custom Webhook").tag(PublicationServiceType.customWebhook)
                     }
                     .pickerStyle(.segmented)
                 }
@@ -83,7 +83,9 @@ struct PublishHashView: View {
                 }
             }
             .navigationTitle("Publish Hash")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
