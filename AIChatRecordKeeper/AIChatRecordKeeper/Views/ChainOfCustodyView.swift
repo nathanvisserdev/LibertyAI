@@ -77,7 +77,9 @@ struct ChainOfCustodyView: View {
                 ReportView(reportText: reportText)
             }
         }
+        #if os(macOS)
         .frame(minWidth: 600, minHeight: 500)
+        #endif
         .onAppear {
             loadEntries()
         }
@@ -280,7 +282,9 @@ struct ReportView: View {
                 }
             }
         }
+        #if os(macOS)
         .frame(minWidth: 600, minHeight: 500)
+        #endif
     }
     
     private func saveReport() {

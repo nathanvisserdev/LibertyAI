@@ -101,7 +101,9 @@ struct PublishHashView: View {
                 }
             }
         }
+        #if os(macOS)
         .frame(minWidth: 500, minHeight: 400)
+        #endif
     }
     
     private var isValid: Bool {
