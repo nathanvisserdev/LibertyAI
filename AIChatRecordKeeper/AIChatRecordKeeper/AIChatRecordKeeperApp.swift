@@ -12,7 +12,10 @@ import SwiftData
 struct AIChatRecordKeeperApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            ChatTranscript.self,
+            HashPublication.self,
+            ChainOfCustodyEntry.self,
+            StorageLocation.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -28,5 +31,13 @@ struct AIChatRecordKeeperApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+        .commands {
+            CommandGroup(replacing: .newItem) {
+                Button("Import Transcript") {
+                    // This will be handled by the view
+                }
+                .keyboardShortcut("n", modifiers: .command)
+            }
+        }
     }
 }
