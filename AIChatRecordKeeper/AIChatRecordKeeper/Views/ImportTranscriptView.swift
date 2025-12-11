@@ -80,7 +80,9 @@ struct ImportTranscriptView: View {
                 }
             }
         }
+        #if os(macOS)
         .frame(minWidth: 600, minHeight: 500)
+        #endif
     }
     
     private var isValid: Bool {

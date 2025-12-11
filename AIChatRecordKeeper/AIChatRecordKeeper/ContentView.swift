@@ -41,8 +41,10 @@ struct MainView: View {
                 EmptyStateView()
             }
         }
+        #if os(macOS)
         .navigationSplitViewStyle(.balanced)
         .frame(minWidth: 900, minHeight: 600)
+        #endif
         .overlay(alignment: .top) {
             if viewModel.isLoading {
                 ProgressView()

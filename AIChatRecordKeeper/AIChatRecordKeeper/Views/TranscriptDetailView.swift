@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+#if canImport(AppKit)
+import AppKit
+#endif
 
 struct TranscriptDetailView: View {
     @Bindable var viewModel: TranscriptViewModel
@@ -283,12 +286,29 @@ struct StorageLocationRow: View {
             
             Spacer()
             
+            #if os(macOS)
             Button {
                 NSWorkspace.shared.selectFile(path, inFileViewerRootedAtPath: "")
             } label: {
                 Image(systemName: "arrow.right.circle")
             }
             .buttonStyle(.plain)
+            #else
+            Button {
+                // iOS: Show share sheet for the file
+                if let url = URL(string: "file://" + path) {
+                    let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let window = windowScene.windows.first,
+                       let rootVC = window.rootViewController {
+                        rootVC.present(activityVC, animated: true)
+                    }
+                }
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+            }
+            .buttonStyle(.plain)
+            #endif
         }
         .padding(.vertical, 4)
     }

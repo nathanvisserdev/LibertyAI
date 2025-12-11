@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
+#if canImport(AppKit)
+import AppKit
+#endif
 
 struct ChainOfCustodyView: View {
     let transcript: ChatTranscript
@@ -281,8 +284,9 @@ struct ReportView: View {
     }
     
     private func saveReport() {
+        #if os(macOS)
         let savePanel = NSSavePanel()
-        savePanel.allowedContentTypes = [.plainText]
+        savePanel.allowedContentTypes = [UTType.plainText]
         savePanel.nameFieldStringValue = "chain_of_custody_report.txt"
         
         savePanel.begin { response in
@@ -290,5 +294,17 @@ struct ReportView: View {
                 try? reportText.write(to: url, atomically: true, encoding: .utf8)
             }
         }
+        #else
+        // iOS: Use share sheet
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("chain_of_custody_report.txt")
+        try? reportText.write(to: tempURL, atomically: true, encoding: .utf8)
+        
+        let activityVC = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let rootVC = window.rootViewController {
+            rootVC.present(activityVC, animated: true)
+        }
+        #endif
     }
 }
